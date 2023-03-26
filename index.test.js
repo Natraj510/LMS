@@ -1,40 +1,32 @@
-import React from "react";
-import { HashRouter, Switch, Route, Redirect } from "react-router-dom";
-import { mount } from "enzyme";
-import App from "./App";
-import AuthLayout from "./AuthLayout";
-import AdminLayout from "./AdminLayout";
+import { render, screen } from '@testing-library/react';
+import { HashRouter } from 'react-router-dom';
+import App from './App';
 
-describe("App component", () => {
-  it("renders the AuthLayout component when the route is /auth", () => {
-    const wrapper = mount(
-      <HashRouter initialEntries={["/auth"]}>
+describe('Routing', () => {
+  test('renders dashboard when redirected from root', () => {
+    render(
+      <HashRouter initialEntries={['/']}>
         <App />
       </HashRouter>
     );
-    expect(wrapper.find(AuthLayout)).toHaveLength(1);
-    expect(wrapper.find(AdminLayout)).toHaveLength(0);
+    expect(screen.getByText('Dashboard')).toBeInTheDocument();
   });
 
-  it("renders the AdminLayout component when the route is /admin", () => {
-    const wrapper = mount(
-      <HashRouter initialEntries={["/admin"]}>
+  test('renders AuthLayout when navigated to /auth', () => {
+    render(
+      <HashRouter initialEntries={['/auth']}>
         <App />
       </HashRouter>
     );
-    expect(wrapper.find(AuthLayout)).toHaveLength(0);
-    expect(wrapper.find(AdminLayout)).toHaveLength(1);
+    expect(screen.getByText('Auth Layout')).toBeInTheDocument();
   });
 
-  it("redirects to /admin/dashboard when the route is /", () => {
-    const wrapper = mount(
-      <HashRouter initialEntries={["/"]}>
+  test('renders AdminLayout when navigated to /admin', () => {
+    render(
+      <HashRouter initialEntries={['/admin']}>
         <App />
       </HashRouter>
     );
-    expect(wrapper.find(AuthLayout)).toHaveLength(0);
-    expect(wrapper.find(AdminLayout)).toHaveLength(1);
+    expect(screen.getByText('Admin Layout')).toBeInTheDocument();
   });
-
- 
 });
