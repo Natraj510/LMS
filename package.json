@@ -44,7 +44,7 @@
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build && gulp licenses",
-		"test": "jest",
+		"test": "jest --transform babel-jest",
 		"eject": "react-scripts eject",
 		"deploy": "npm run build",
 		"lint:check": "eslint . --ext=js,jsx;  exit 0",
